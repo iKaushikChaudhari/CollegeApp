@@ -44,8 +44,16 @@ class sign_up : AppCompatActivity() {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this@sign_up, MainActivity::class.java)
-                    startActivity(intent)
+                    mAuth.currentUser?.sendEmailVerification()
+                        ?.addOnSuccessListener {
+                            Toast.makeText(this, "Please Verify Your Email", Toast.LENGTH_SHORT).show()
+                            //saveData()
+                        }
+                        ?.addOnFailureListener {
+                            Toast.makeText( this,it.toString(), Toast.LENGTH_SHORT).show()
+                        }
+                   // val intent = Intent(this@sign_up, log_in::class.java)
+                   // startActivity(intent)
                 } else {
                     Toast.makeText(this@sign_up, "Some error occurred", Toast.LENGTH_SHORT).show()
                 }

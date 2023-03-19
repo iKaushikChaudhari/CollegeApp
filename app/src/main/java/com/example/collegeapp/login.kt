@@ -49,11 +49,15 @@ class log_in : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    val verification= mAuth.currentUser?.isEmailVerified
+                    if (verification==true){
                     val intent = Intent(this@log_in, HomePage::class.java)
                     startActivity(intent)
+                    }else
+                        Toast.makeText(this, "Please Verify Your Email", Toast.LENGTH_SHORT).show()
 
                 } else {
-                    Toast.makeText(this@log_in, "User does not exist", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@log_in, "Enter Correct Username And Password", Toast.LENGTH_SHORT).show()
                 }
             }
     }
